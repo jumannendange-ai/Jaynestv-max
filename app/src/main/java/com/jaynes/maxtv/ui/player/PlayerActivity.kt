@@ -137,13 +137,13 @@ class PlayerActivity : AppCompatActivity() {
 
         player = ExoPlayer.Builder(this)
             .setTrackSelector(trackSelector!!)
-            .apply { if (drmMgr != null) setDrmSessionManagerProvider { drmMgr } }
+            
             .build()
             .also { exo ->
                 binding.playerView.player = exo
                 exo.addListener(playerListener)
                 exo.playWhenReady = true
-                exo.setMediaSource(buildMediaSource(okClient))
+                exo.setMediaSource(buildMediaSource(okClient, drmMgr))
                 exo.prepare()
             }
 
@@ -177,14 +177,28 @@ class PlayerActivity : AppCompatActivity() {
         }
     }
 
-    private fun okHttpFactory(client: OkHttpClient): okhttp3.Call.Factory = client
+    private fun okHttpFactory(client: OkHttpClient): DataSource.Factory = OkHttpDataSource.Factory(client)
 
-    private fun buildMediaSource(okClient: OkHttpClient): MediaSource {
+    private fun buildMediaSource(okClient: OkHttpClient, drmMgr: DrmSessionManager?): MediaSource {
         val dsFactory = OkHttpDataSource.Factory(okClient)
             .setDefaultRequestProperties(mapOf("X-Azam-Token" to BuildConfig.AZAM_TOKEN))
 
+        val drmUuid = when (drmType.uppercase()) {
+            "WIDEVINE" -> C.WIDEVINE_UUID
+            "CLEARKEY" -> C.CLEARKEY_UUID
+            else -> null
+        }
         val mediaItem = MediaItem.Builder()
             .setUri(streamUrl)
+            .apply {
+                if (drmMgr != null && drmUuid != null && drmLicense.isNotEmpty()) {
+                    setDrmConfiguration(
+                        MediaItem.DrmConfiguration.Builder(drmUuid)
+                            .setLicenseUri(drmLicense)
+                            .build()
+                    )
+                }
+            }
             .build()
 
         return when (streamType.uppercase()) {
