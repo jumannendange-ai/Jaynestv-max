@@ -17,7 +17,6 @@ class SplashActivity : AppCompatActivity() {
     private lateinit var session: SessionManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        androidx.core.splashscreen.SplashScreen.installSplashScreen(this)
         super.onCreate(savedInstanceState)
         binding = ActivitySplashBinding.inflate(layoutInflater)
         setContentView(binding.root)
