@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "225205253776",
+    "project_id": "jaynes-max-tv",
+    "storage_bucket": "jaynes-max-tv.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:225205253776:android:f29d6d79ca753a0b44ca15",
+        "android_client_info": {
+          "package_name": "com.jaynes.maxtv"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD1COq0mlZ02XoCVm7-CH65b8caIBNyeGg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

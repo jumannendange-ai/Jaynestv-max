@@ -1,0 +1,8 @@
+-keep class com.jaynes.maxtv.model.** { *; }
+-keep class com.google.gson.** { *; }
+-keep class retrofit2.** { *; }
+-dontwarn retrofit2.**
+-keep class okhttp3.** { *; }
+-dontwarn okhttp3.**
+-keep class androidx.media3.** { *; }
+-dontwarn androidx.media3.**
