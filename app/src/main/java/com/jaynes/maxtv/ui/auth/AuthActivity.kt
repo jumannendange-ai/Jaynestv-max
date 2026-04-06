@@ -107,13 +107,24 @@ class AuthActivity : AppCompatActivity() {
 
     private fun onSuccess(auth: AuthResponse) {
         val user = auth.user ?: UserModel(name = "User", email = "")
-        val exp  = System.currentTimeMillis() + (24 * 3600 * 1000L)
-        val token = auth.token ?: user.id ?: "session_${System.currentTimeMillis()}"
-        session.saveSession(token, user, exp)
-        startActivity(Intent(this, HomeActivity::class.java).apply {
-            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-        })
-        finish()
+        lifecycleScope.launch {
+            try {
+                val uid = user.id ?: "session_${System.currentTimeMillis()}"
+                val r = ApiClient.streamApi.getStreamToken(StreamTokenRequest(uid))
+                val tokenData = r.body()
+                val token = tokenData?.token ?: uid
+                val exp = System.currentTimeMillis() + (tokenData?.expires_in ?: 3600) * 1000L
+                session.saveSession(token, user, exp)
+            } catch (e: Exception) {
+                val token = user.id ?: "session_${System.currentTimeMillis()}"
+                val exp = System.currentTimeMillis() + 24 * 3600 * 1000L
+                session.saveSession(token, user, exp)
+            }
+            startActivity(Intent(this@AuthActivity, HomeActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+            })
+            finish()
+        }
     }
 
     private fun showError(msg: String) {

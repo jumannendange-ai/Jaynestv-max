@@ -16,6 +16,8 @@ interface AuthApiService {
 }
 
 interface StreamApiService {
+    @POST("auth/token")
+    suspend fun getStreamToken(@Body body: StreamTokenRequest): Response<StreamTokenResponse>
     @GET("channels")
     suspend fun getChannels(@Header("Authorization") token: String): Response<ChannelsResponse>
 }
@@ -24,3 +26,6 @@ interface UpdateApiService {
     @GET("version")
     suspend fun checkUpdate(): Response<UpdateResponse>
 }
+
+data class StreamTokenRequest(val user_id: String)
+data class StreamTokenResponse(val token: String, val expires_in: Int = 3600, val tier: String? = null)
