@@ -70,8 +70,9 @@ class HomeActivity : AppCompatActivity() {
         binding.tvEmpty.visibility = View.GONE
         lifecycleScope.launch {
             try {
-                val token = "Bearer ${session.getToken()}"
-                val r = ApiClient.streamApi.getChannels(token)
+                val userId = session.getUserId() ?: ""
+                val token = session.getToken() ?: ""
+                val r = ApiClient.streamApi.getChannels(userId, token)
                 if (r.isSuccessful) {
                     allChannels = r.body()?.channels?.filter { it.active } ?: emptyList()
                     adapter.submitList(allChannels)

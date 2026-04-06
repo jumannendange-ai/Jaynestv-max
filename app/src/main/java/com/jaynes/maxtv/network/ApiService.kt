@@ -19,7 +19,7 @@ interface StreamApiService {
     @POST("auth/token")
     suspend fun getStreamToken(@Body body: StreamTokenRequest): Response<StreamTokenResponse>
     @GET("channels")
-    suspend fun getChannels(@Header("Authorization") token: String): Response<ChannelsResponse>
+    suspend fun getChannels(@Query("user_id") userId: String, @Query("token") token: String): Response<ChannelsResponse>
 }
 
 interface UpdateApiService {
