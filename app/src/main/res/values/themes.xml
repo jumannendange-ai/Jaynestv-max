@@ -13,7 +13,7 @@
 
     <style name="Theme.JaynesMaxTV.Player" parent="Theme.JaynesMaxTV">
         <item name="android:windowFullscreen">true</item>
-        <item name="android:windowLayoutInDisplayCutoutMode" tools:targetApi="o_mr1">shortEdges</item>
+        <item name="
     </style>
 
     <style name="JaynesDialog" parent="Theme.MaterialComponents.DayNight.Dialog.Alert">
