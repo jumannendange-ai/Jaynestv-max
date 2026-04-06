@@ -70,7 +70,7 @@ class AuthActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val r = ApiClient.authApi.login(LoginRequest(email, pass))
-                if (r.isSuccessful && r.body()?.token != null) {
+                if (r.isSuccessful && r.body()?.success == true) {
                     onSuccess(r.body()!!)
                 } else {
                     showError(r.body()?.error ?: r.body()?.message ?: "Kosa ${r.code()}")
@@ -94,7 +94,7 @@ class AuthActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val r = ApiClient.authApi.register(RegisterRequest(name, email, pass))
-                if (r.isSuccessful && r.body()?.token != null) {
+                if (r.isSuccessful && r.body()?.success == true) {
                     onSuccess(r.body()!!)
                 } else {
                     showError(r.body()?.error ?: r.body()?.message ?: "Kosa ${r.code()}")
@@ -108,7 +108,8 @@ class AuthActivity : AppCompatActivity() {
     private fun onSuccess(auth: AuthResponse) {
         val user = auth.user ?: UserModel(name = "User", email = "")
         val exp  = System.currentTimeMillis() + (24 * 3600 * 1000L)
-        session.saveSession(auth.token!!, user, exp)
+        val token = auth.token ?: user.id ?: "session_${System.currentTimeMillis()}"
+        session.saveSession(token, user, exp)
         startActivity(Intent(this, HomeActivity::class.java).apply {
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         })

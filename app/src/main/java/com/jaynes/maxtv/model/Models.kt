@@ -13,10 +13,13 @@ data class LoginRequest(val email: String, val password: String)
 data class RegisterRequest(val name: String, val email: String, val password: String)
 
 data class AuthResponse(
+    val success: Boolean = false,
     val token: String? = null,
     val user: UserModel? = null,
     val error: String? = null,
-    val message: String? = null
+    val message: String? = null,
+    @com.google.gson.annotations.SerializedName("has_subscription")
+    val hasSubscription: Boolean = false
 )
 
 data class Channel(
