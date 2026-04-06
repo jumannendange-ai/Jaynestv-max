@@ -1,5 +1,4 @@
 package com.jaynes.maxtv.ui.home
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 import android.content.Intent
 import android.os.Bundle
