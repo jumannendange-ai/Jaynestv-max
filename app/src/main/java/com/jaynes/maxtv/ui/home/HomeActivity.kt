@@ -15,7 +15,6 @@ import com.jaynes.maxtv.ui.player.PlayerActivity
 import com.jaynes.maxtv.util.SessionManager
 import com.jaynes.maxtv.util.toast
 import kotlinx.coroutines.launch
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 
 class HomeActivity : AppCompatActivity() {
 
@@ -89,11 +88,11 @@ class HomeActivity : AppCompatActivity() {
                 binding.tvEmpty.visibility = View.VISIBLE
             } finally {
                 binding.progressHome.visibility = View.GONE
-                findViewById<SwipeRefreshLayout>(R.id.swipeRefresh).isRefreshing = false
+                // swipeRefresh.isRefreshing = false
             }
         }
 
-        findViewById<SwipeRefreshLayout>(R.id.swipeRefresh).setOnRefreshListener { loadChannels() }
+        // swipeRefresh listener removed
     }
 
     private fun openPlayer(ch: Channel) {
