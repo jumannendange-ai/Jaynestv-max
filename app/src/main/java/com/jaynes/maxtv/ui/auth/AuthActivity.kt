@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.jaynes.maxtv.databinding.ActivityAuthBinding
 import com.jaynes.maxtv.model.*
+import com.jaynes.maxtv.network.StreamTokenRequest
 import com.jaynes.maxtv.network.ApiClient
 import com.jaynes.maxtv.ui.home.HomeActivity
 import com.jaynes.maxtv.util.SessionManager

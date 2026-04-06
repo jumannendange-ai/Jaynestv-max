@@ -21,6 +21,7 @@ class SessionManager(context: Context) {
         prefs.edit()
             .putString(KEY_TOKEN, token)
             .putString(KEY_USER, gson.toJson(user))
+            .putString("user_id", user.id)
             .putLong(KEY_TOK_EXP, expiresAt)
             .apply()
     }
